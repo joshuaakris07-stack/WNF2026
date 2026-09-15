@@ -1,3 +1,4 @@
+app = "wnf2026-genetic-archive"
 primary_region = "sin"
 
 [build]
