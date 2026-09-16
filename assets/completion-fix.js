@@ -1,14 +1,14 @@
 (() => {
   const music = document.getElementById('successMusic');
-  const unlock = document.getElementById('unlockBtn');
   const result = document.getElementById('resultScreen');
   const soundBtn = document.getElementById('soundBtn');
-  if (!unlock || !result) return;
+  if (!result) return;
 
   const VIDEO_ID = 'Ui2-DTFqQMM';
   const START = 0;
   const END = 1200;
   let ambienceFrame = null;
+  let firstGestureHandled = false;
 
   // Disable the old short placeholder audio.
   if (music) {
@@ -24,10 +24,8 @@
   fallback.textContent = '▶ Play ambience';
   result.appendChild(fallback);
 
-  function enteredCode() {
-    return [...document.querySelectorAll('.digit-slot')]
-      .map(el => el.textContent.trim())
-      .join('');
+  function isMuted() {
+    return !!(soundBtn && soundBtn.textContent.trim() === '×');
   }
 
   function stopAmbience() {
@@ -37,8 +35,11 @@
     }
   }
 
-  function playAmbience() {
-    stopAmbience();
+  function playAmbience(restart = false) {
+    if (isMuted()) return;
+    if (ambienceFrame && !restart) return;
+    if (restart) stopAmbience();
+
     const frame = document.createElement('iframe');
     frame.width = '1';
     frame.height = '1';
@@ -51,23 +52,37 @@
     fallback.classList.remove('show');
   }
 
-  unlock.addEventListener('click', () => {
-    if (enteredCode() !== '1812') return;
-    playAmbience();
-  }, true);
+  // Try to start the 20-minute ambience as soon as the page opens.
+  playAmbience();
 
-  fallback.addEventListener('click', playAmbience);
+  // Browsers may block audible autoplay. The first click/tap/key press restarts
+  // the ambience inside a real user gesture so it begins before the code is solved.
+  function startOnFirstGesture() {
+    if (firstGestureHandled || isMuted()) return;
+    firstGestureHandled = true;
+    playAmbience(true);
+  }
+
+  window.addEventListener('pointerdown', startOnFirstGesture, true);
+  window.addEventListener('touchstart', startOnFirstGesture, { capture: true, passive: true });
+  window.addEventListener('keydown', startOnFirstGesture, true);
+
+  fallback.addEventListener('click', () => playAmbience(true));
 
   if (soundBtn) {
     soundBtn.addEventListener('click', () => {
       setTimeout(() => {
-        const muted = soundBtn.textContent.trim() === '×';
-        if (muted) stopAmbience();
-        else if (result.classList.contains('show')) playAmbience();
+        if (isMuted()) {
+          stopAmbience();
+        } else {
+          firstGestureHandled = true;
+          playAmbience(true);
+        }
       }, 0);
     });
   }
 
+  // Keep code correction usable from the physical keyboard.
   window.addEventListener('keydown', event => {
     if (result.classList.contains('show')) return;
     if (event.key === 'Delete') {
