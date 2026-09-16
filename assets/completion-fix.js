@@ -9,6 +9,7 @@
   const END = 1200;
   let ambienceFrame = null;
   let firstGestureHandled = false;
+  let clickAudioCtx = null;
 
   // Disable the old short placeholder audio.
   if (music) {
@@ -51,6 +52,41 @@
     ambienceFrame = frame;
     fallback.classList.remove('show');
   }
+
+  function playLoudClick() {
+    if (isMuted()) return;
+    const AudioContextClass = window.AudioContext || window.webkitAudioContext;
+    if (!AudioContextClass) return;
+    if (!clickAudioCtx) clickAudioCtx = new AudioContextClass();
+    if (clickAudioCtx.state === 'suspended') clickAudioCtx.resume();
+
+    const now = clickAudioCtx.currentTime;
+    const osc = clickAudioCtx.createOscillator();
+    const gain = clickAudioCtx.createGain();
+    const filter = clickAudioCtx.createBiquadFilter();
+
+    osc.type = 'square';
+    osc.frequency.setValueAtTime(1250, now);
+    osc.frequency.exponentialRampToValueAtTime(720, now + 0.045);
+
+    filter.type = 'highpass';
+    filter.frequency.value = 420;
+
+    // Intentionally louder than the original UI beep so it cuts through ambience.
+    gain.gain.setValueAtTime(0.16, now);
+    gain.gain.exponentialRampToValueAtTime(0.0001, now + 0.065);
+
+    osc.connect(filter).connect(gain).connect(clickAudioCtx.destination);
+    osc.start(now);
+    osc.stop(now + 0.07);
+  }
+
+  // Add a strong tactile click to keypad, clear/delete, unlock, and sound buttons.
+  document.addEventListener('click', event => {
+    const button = event.target.closest('.key, .unlock, .sound-btn');
+    if (!button || button.disabled) return;
+    playLoudClick();
+  }, true);
 
   // Try to start the 20-minute ambience as soon as the page opens.
   playAmbience();
