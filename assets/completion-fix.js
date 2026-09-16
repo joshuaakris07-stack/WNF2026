@@ -4,8 +4,11 @@
   const result = document.getElementById('resultScreen');
   if (!music || !unlock || !result) return;
 
+  // Cache-bust the previously broken audio file and preload the replacement.
+  music.src = '/assets/success-music.mp3?v=5';
   music.volume = 0.62;
   music.preload = 'auto';
+  music.load();
 
   const fallback = document.createElement('button');
   fallback.type = 'button';
@@ -26,6 +29,7 @@
     }
   }
 
+  // Play synchronously inside the Unlock button's real user click gesture.
   unlock.addEventListener('click', () => {
     if (enteredCode() !== '1812') return;
     music.currentTime = 0;
@@ -34,6 +38,7 @@
 
   fallback.addEventListener('click', playMusic);
 
+  // Keep code correction usable from both the keypad and physical keyboard.
   window.addEventListener('keydown', (event) => {
     if (result.classList.contains('show')) return;
     if (event.key === 'Delete') {
