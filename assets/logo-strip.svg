@@ -1,0 +1,57 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="720" height="108" viewBox="0 0 720 108" role="img" aria-label="UPH, FIKES, Biologi, and Himpunan Mahasiswa Biologi logos">
+  <defs>
+    <linearGradient id="panel" x1="0" x2="1">
+      <stop offset="0" stop-color="#f7f5fb" stop-opacity=".94"/>
+      <stop offset="1" stop-color="#e9e6f6" stop-opacity=".90"/>
+    </linearGradient>
+    <linearGradient id="dna" x1="0" y1="0" x2="1" y2="0">
+      <stop offset="0" stop-color="#20b9d0"/><stop offset=".26" stop-color="#2fb56f"/><stop offset=".52" stop-color="#f0ce39"/><stop offset=".76" stop-color="#ef5d4f"/><stop offset="1" stop-color="#884ec1"/>
+    </linearGradient>
+  </defs>
+  <rect x="0" y="0" width="720" height="108" rx="0" fill="url(#panel)"/>
+  <path d="M690 0h30v78c0 16.6-13.4 30-30 30H0V0z" fill="url(#panel)"/>
+
+  <!-- UPH mark -->
+  <g transform="translate(20 19)">
+    <circle cx="32" cy="34" r="28" fill="#123365" stroke="#d32e3e" stroke-width="4"/>
+    <path d="M32 14l12 9-4 26-8 8-8-8-4-26z" fill="#f2f5fb"/>
+    <path d="M24 25h16l-2 16-6 7-6-7z" fill="#d72e3b"/>
+    <path d="M25 18c4-5 10-5 14 0" fill="none" stroke="#72b8dc" stroke-width="3"/>
+    <text x="70" y="43" font-family="Arial, Helvetica, sans-serif" font-size="39" font-weight="800" fill="#112953" letter-spacing="-1">UPH</text>
+    <text x="154" y="25" font-family="Arial, Helvetica, sans-serif" font-size="8.5" font-weight="700" fill="#26314d">Universitas</text>
+    <text x="154" y="37" font-family="Arial, Helvetica, sans-serif" font-size="8.5" font-weight="700" fill="#26314d">Pelita</text>
+    <text x="154" y="49" font-family="Arial, Helvetica, sans-serif" font-size="8.5" font-weight="700" fill="#26314d">Harapan</text>
+  </g>
+
+  <line x1="210" y1="24" x2="210" y2="84" stroke="#8d8fa8" stroke-opacity=".55"/>
+
+  <!-- FIKES mark -->
+  <g transform="translate(228 22)">
+    <path d="M14 10h13v14h14v13H27v14H14V37H0V24h14z" fill="none" stroke="#22bca7" stroke-width="5" stroke-linejoin="round"/>
+    <text x="51" y="38" font-family="Arial, Helvetica, sans-serif" font-size="30" font-weight="700" fill="#6e3c8f">FIKES</text>
+    <text x="53" y="55" font-family="Arial, Helvetica, sans-serif" font-size="6.6" font-weight="700" fill="#4a4163" letter-spacing=".55">FAKULTAS ILMU KESEHATAN</text>
+  </g>
+
+  <line x1="374" y1="24" x2="374" y2="84" stroke="#8d8fa8" stroke-opacity=".55"/>
+
+  <!-- Biology mark -->
+  <g transform="translate(391 20)">
+    <path d="M12 16c18-13 31 2 18 18-12 15-24 17-30 8 8-1 15-5 22-14-7 5-13 7-20 8 0-8 3-15 10-20z" fill="#b8cc38"/>
+    <path d="M4 44c12-17 24-25 35-28" fill="none" stroke="#7aa343" stroke-width="2"/>
+    <text x="45" y="39" font-family="Georgia, 'Times New Roman', serif" font-size="26" font-weight="700" fill="#16172a">BIOLOGI</text>
+    <text x="47" y="55" font-family="Arial, Helvetica, sans-serif" font-size="6.7" font-weight="700" fill="#4b465b" letter-spacing=".5">UNIVERSITAS PELITA HARAPAN</text>
+  </g>
+
+  <line x1="535" y1="24" x2="535" y2="84" stroke="#8d8fa8" stroke-opacity=".55"/>
+
+  <!-- HMB Biology mark -->
+  <g transform="translate(550 15)">
+    <text x="67" y="10" text-anchor="middle" font-family="Arial, Helvetica, sans-serif" font-size="6.8" font-weight="700" fill="#403750" letter-spacing="2.2">HIMPUNAN MAHASISWA</text>
+    <path d="M3 31C20 15 35 15 52 31s32 16 49 0 32-16 49 0" fill="none" stroke="url(#dna)" stroke-width="8" stroke-linecap="round"/>
+    <path d="M3 50C20 66 35 66 52 50s32-16 49 0 32 16 49 0" fill="none" stroke="url(#dna)" stroke-width="8" stroke-linecap="round"/>
+    <g stroke="#53607b" stroke-opacity=".65" stroke-width="2">
+      <line x1="14" y1="24" x2="14" y2="57"/><line x1="34" y1="21" x2="34" y2="60"/><line x1="54" y1="30" x2="54" y2="51"/><line x1="74" y1="38" x2="74" y2="43"/><line x1="94" y1="29" x2="94" y2="52"/><line x1="114" y1="21" x2="114" y2="60"/><line x1="134" y1="24" x2="134" y2="57"/>
+    </g>
+    <text x="76" y="78" text-anchor="middle" font-family="Arial, Helvetica, sans-serif" font-size="11" font-weight="700" fill="#342c48" letter-spacing="8">BIOLOGI</text>
+  </g>
+</svg>
