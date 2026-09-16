@@ -2,13 +2,21 @@
   const music = document.getElementById('successMusic');
   const unlock = document.getElementById('unlockBtn');
   const result = document.getElementById('resultScreen');
-  if (!music || !unlock || !result) return;
+  const soundBtn = document.getElementById('soundBtn');
+  if (!unlock || !result) return;
 
-  // Cache-bust the previously broken audio file and preload the replacement.
-  music.src = '/assets/success-music.mp3?v=5';
-  music.volume = 0.62;
-  music.preload = 'auto';
-  music.load();
+  const VIDEO_ID = 'Ui2-DTFqQMM';
+  const START = 0;
+  const END = 1200;
+  let ambienceFrame = null;
+
+  // Disable the old short placeholder audio.
+  if (music) {
+    music.pause();
+    music.removeAttribute('src');
+    music.removeAttribute('loop');
+    music.load();
+  }
 
   const fallback = document.createElement('button');
   fallback.type = 'button';
@@ -17,29 +25,50 @@
   result.appendChild(fallback);
 
   function enteredCode() {
-    return [...document.querySelectorAll('.digit-slot')].map(el => el.textContent.trim()).join('');
+    return [...document.querySelectorAll('.digit-slot')]
+      .map(el => el.textContent.trim())
+      .join('');
   }
 
-  function playMusic() {
-    music.muted = false;
-    const p = music.play();
-    if (p && typeof p.then === 'function') {
-      p.then(() => fallback.classList.remove('show'))
-       .catch(() => fallback.classList.add('show'));
+  function stopAmbience() {
+    if (ambienceFrame) {
+      ambienceFrame.remove();
+      ambienceFrame = null;
     }
   }
 
-  // Play synchronously inside the Unlock button's real user click gesture.
+  function playAmbience() {
+    stopAmbience();
+    const frame = document.createElement('iframe');
+    frame.width = '1';
+    frame.height = '1';
+    frame.allow = 'autoplay; encrypted-media';
+    frame.setAttribute('aria-hidden', 'true');
+    frame.style.cssText = 'position:fixed;left:-9999px;top:-9999px;width:1px;height:1px;opacity:0;pointer-events:none;border:0;';
+    frame.src = `https://www.youtube.com/embed/${VIDEO_ID}?autoplay=1&controls=0&loop=1&playlist=${VIDEO_ID}&start=${START}&end=${END}&playsinline=1&rel=0`;
+    document.body.appendChild(frame);
+    ambienceFrame = frame;
+    fallback.classList.remove('show');
+  }
+
   unlock.addEventListener('click', () => {
     if (enteredCode() !== '1812') return;
-    music.currentTime = 0;
-    playMusic();
+    playAmbience();
   }, true);
 
-  fallback.addEventListener('click', playMusic);
+  fallback.addEventListener('click', playAmbience);
 
-  // Keep code correction usable from both the keypad and physical keyboard.
-  window.addEventListener('keydown', (event) => {
+  if (soundBtn) {
+    soundBtn.addEventListener('click', () => {
+      setTimeout(() => {
+        const muted = soundBtn.textContent.trim() === '×';
+        if (muted) stopAmbience();
+        else if (result.classList.contains('show')) playAmbience();
+      }, 0);
+    });
+  }
+
+  window.addEventListener('keydown', event => {
     if (result.classList.contains('show')) return;
     if (event.key === 'Delete') {
       const del = document.querySelector('[data-action="delete"]');
