@@ -39,16 +39,16 @@ body::before{
   filter:none!important;
 }
 
-/* Force browsers to fetch the newly replaced PDF background instead of a stale cached copy. */
+/* Completion screen should show the actual background image with no softening layer. */
 .result-screen::before{
   display:none!important;
   background:none!important;
 }
 .result-screen,
 .result-screen.show{
-  background:#151b58 url('/assets/background.webp?v=20260917-0333') center/cover no-repeat!important;
+  background:#151b58 url('/assets/background.webp?v=uploaded-hq') center/cover no-repeat!important;
 }
 
 body{
-  background:#151b58 url('/assets/background.webp?v=20260917-0333') center/cover no-repeat!important;
+  background:#151b58 url('/assets/background.webp?v=uploaded-hq') center/cover no-repeat!important;
 }
