@@ -1,0 +1,23 @@
+/* Desktop layout tuned so 100% browser zoom visually matches the previous ~80% view. */
+@media (min-width: 761px) {
+  .topbar {
+    zoom: 0.8;
+    width: 125%;
+  }
+
+  main {
+    zoom: 0.8;
+    width: 125%;
+    min-height: calc(125svh - 110px) !important;
+  }
+
+  .result-screen {
+    zoom: 0.8;
+    width: 125vw;
+    height: 125vh;
+  }
+
+  .result-shell {
+    min-height: 125svh !important;
+  }
+}
