@@ -1,23 +1,54 @@
-/* Keep the PDF background and institutional logos crisp at all times. */
-.topbar{
-  backdrop-filter:none!important;
-  -webkit-backdrop-filter:none!important;
-  background:linear-gradient(90deg,rgba(20,21,84,.05),rgba(7,20,65,.08))!important;
+/* Keep the PDF background crisp and completely unfiltered at all times. */
+html,body{
+  filter:none!important;
+  image-rendering:auto!important;
 }
 
-.topbar::before,.topbar::after{
+/* Remove the dark/radial overlay and scanline effect that softened the artwork. */
+body::before{
+  background:transparent!important;
+  filter:none!important;
+  backdrop-filter:none!important;
+  -webkit-backdrop-filter:none!important;
+}
+.scanlines{
+  display:none!important;
+  background:none!important;
+  opacity:0!important;
+  filter:none!important;
+}
+
+/* Do not blur the background through header/panel compositing. */
+.topbar,
+.terminal,
+.result-screen,
+.result-screen.show{
   backdrop-filter:none!important;
   -webkit-backdrop-filter:none!important;
   filter:none!important;
 }
 
-/* The completion screen used to blur everything behind it. */
-.result-screen,
-.result-screen.show{
+.topbar{
+  background:rgba(7,20,65,.08)!important;
+}
+
+.topbar::before,.topbar::after,
+.result-screen::before{
   backdrop-filter:none!important;
   -webkit-backdrop-filter:none!important;
+  filter:none!important;
+}
+
+/* Completion screen should show the actual background image with no softening layer. */
+.result-screen::before{
+  display:none!important;
+  background:none!important;
+}
+.result-screen,
+.result-screen.show{
+  background:#151b58 url('/assets/background.webp?v=pdf-hq') center/cover no-repeat!important;
 }
 
 body{
-  image-rendering:auto!important;
+  background:#151b58 url('/assets/background.webp?v=pdf-hq') center/cover no-repeat!important;
 }
